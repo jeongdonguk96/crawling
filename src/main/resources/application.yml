@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: crawler
+
+  config:
+    import: classpath:crawling-urls.yml
