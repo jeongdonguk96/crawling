@@ -2,18 +2,18 @@ package com.goods.crawler.crawling_service.api_crawling
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.goods.crawler.enums.WebSite
-import com.goods.crawler.product.vo.Product
 import com.goods.crawler.product.service.ProductService
+import com.goods.crawler.product.vo.Product
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 
 @Component
 class IttanStoreAPICrawlingService(
-    private val productService: ProductService
+    private val productService: ProductService,
+    private val webClient: WebClient
 ) : APICrawlingService {
 
     override val siteName = WebSite.ITTANSTORE.name.lowercase()
-    private val webClient = WebClient.create("https://m.ittanstore.com")
 
 
     override fun crawl() {
@@ -27,7 +27,7 @@ class IttanStoreAPICrawlingService(
 
         while (true) {
             val responseBody = webClient.get()
-                .uri("/exec/front/Product/ApiProductNormal?cate_no=$cateNo&supplier_code=$supplierCode&bInitMore=$bInitMore&count=$count&page=$page")
+                .uri("https://m.ittanstore.com/exec/front/Product/ApiProductNormal?cate_no=$cateNo&supplier_code=$supplierCode&bInitMore=$bInitMore&count=$count&page=$page")
                 .retrieve()
                 .bodyToMono(String::class.java)
                 .block() ?: break
@@ -36,7 +36,7 @@ class IttanStoreAPICrawlingService(
             if (productList.isEmpty() || productList.size < count.toInt()) break
 
             println("크롤링 페이지: $page, 아이템 개수: ${productList.size}")
-            productService.insertProduct(productList)
+            productService.insertProducts(productList)
 
             page++
             Thread.sleep(2000L)

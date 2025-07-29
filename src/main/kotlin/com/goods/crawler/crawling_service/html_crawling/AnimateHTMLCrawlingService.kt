@@ -33,7 +33,7 @@ class AnimateHTMLCrawlingService(
             val productList = parseProductList(items)
 
             println("크롤링 URL: $url, 아이템 개수: ${productList.size}")
-            productService.insertProduct(productList)
+            productService.insertProducts(productList)
 
             Thread.sleep(2000L)
             if (page > 5) break

@@ -1,0 +1,6 @@
+html-crawling:
+  targets:
+    animate:
+      url:
+        - https://www.animate-onlineshop.co.kr/goods/goods_list.php?cateCd=001003
+        - https://www.animate-onlineshop.co.kr/goods/goods_list.php?cateCd=001004

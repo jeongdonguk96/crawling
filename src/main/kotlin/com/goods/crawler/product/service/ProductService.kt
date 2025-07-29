@@ -9,7 +9,7 @@ class ProductService(
     private val productDao: ProductDao
 ) {
 
-    fun insertProduct(
+    fun insertProducts(
         products: List<Product>
     ) {
         productDao.insertProducts(products)

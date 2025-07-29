@@ -29,9 +29,11 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 
 	// 테스트
+	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
-	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4'
+	testImplementation 'com.squareup.okhttp3:mockwebserver'
+	testImplementation 'io.mockk:mockk:1.14.2'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 

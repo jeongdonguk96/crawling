@@ -192,7 +192,4 @@ gradle-app.setting
 # env file
 *.env
 
-# crawling-urls
-/src/main/resources/*-urls.yml
-
 # End of https://www.toptal.com/developers/gitignore/api/kotlin,intellij,windows,gradle
