@@ -1,0 +1,7 @@
+CREATE TABLE TB_CRAWLING_PRODUCT (
+      id BIGINT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(150),
+      url VARCHAR(150),
+      image_url VARCHAR(150),
+      price VARCHAR(10)
+);

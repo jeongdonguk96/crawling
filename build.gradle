@@ -20,9 +20,13 @@ repositories {
 
 dependencies {
 	// 디펜던시
+	implementation 'org.springframework.boot:spring-boot-configuration-processor'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
 	implementation 'org.jsoup:jsoup:1.20.1'
+	runtimeOnly 'com.h2database:h2'
 
 	// 테스트
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

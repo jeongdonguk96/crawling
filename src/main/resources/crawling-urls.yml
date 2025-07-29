@@ -1,9 +1,0 @@
-crawling:
-#  animate:
-#    url:
-#      - https://www.animate-onlineshop.co.kr/goods/goods_list.php?cateCd=001003
-#      - https://www.animate-onlineshop.co.kr/goods/goods_list.php?cateCd=001004
-  ittanstore:
-    url:
-      - https://m.ittanstore.com/product/list_thumb.html?cate_no=232#none
-      - https://m.ittanstore.com/product/list_thumb.html?cate_no=117#none
