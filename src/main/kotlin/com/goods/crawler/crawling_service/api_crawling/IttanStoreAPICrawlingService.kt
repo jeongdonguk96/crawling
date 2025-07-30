@@ -4,6 +4,8 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.goods.crawler.enums.WebSite
 import com.goods.crawler.product.service.ProductService
 import com.goods.crawler.product.vo.Product
+import com.goods.crawler.util.ThreadUtil
+import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 
@@ -13,8 +15,11 @@ class IttanStoreAPICrawlingService(
     private val webClient: WebClient
 ) : APICrawlingService {
 
-    override val siteName = WebSite.ITTANSTORE.name.lowercase()
+    companion object {
+        private const val URL = "https://m.ittanstore.com/exec/front/Product/ApiProductNormal"
+    }
 
+    override val siteName = WebSite.ITTANSTORE.name.lowercase()
 
     override fun crawl() {
         println("사이트명: $siteName")
@@ -27,7 +32,10 @@ class IttanStoreAPICrawlingService(
 
         while (true) {
             val responseBody = webClient.get()
-                .uri("https://m.ittanstore.com/exec/front/Product/ApiProductNormal?cate_no=$cateNo&supplier_code=$supplierCode&bInitMore=$bInitMore&count=$count&page=$page")
+                .uri("$URL?cate_no=$cateNo&supplier_code=$supplierCode&bInitMore=$bInitMore&count=$count&page=$page")
+                .header(HttpHeaders.USER_AGENT, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/115.0.0.0 Safari/537.36")
+                .header(HttpHeaders.REFERER, "https://m.ittanstore.com/")
+                .header(HttpHeaders.ACCEPT_LANGUAGE, "ko-KR,ko;q=0.9")
                 .retrieve()
                 .bodyToMono(String::class.java)
                 .block() ?: break
@@ -38,9 +46,9 @@ class IttanStoreAPICrawlingService(
             println("크롤링 페이지: $page, 아이템 개수: ${productList.size}")
             productService.insertProducts(productList)
 
+            if (page > 4) break
             page++
-            Thread.sleep(2000L)
-            if (page > 5) break
+            ThreadUtil.sleepRandomly()
         }
     }
 

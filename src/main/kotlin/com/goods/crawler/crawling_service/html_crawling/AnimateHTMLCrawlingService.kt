@@ -1,8 +1,9 @@
 package com.goods.crawler.crawling_service.html_crawling
 
 import com.goods.crawler.enums.WebSite
-import com.goods.crawler.product.vo.Product
 import com.goods.crawler.product.service.ProductService
+import com.goods.crawler.product.vo.Product
+import com.goods.crawler.util.ThreadUtil
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.select.Elements
@@ -28,15 +29,19 @@ class AnimateHTMLCrawlingService(
             val url = "$baseUrl&page=$page"
             println("📄 페이지 $page 크롤링 중: $url")
 
-            val docs = Jsoup.connect(url).get()
+            val docs = Jsoup.connect(url)
+                .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/115.0.0.0 Safari/537.36")
+                .header("Accept-Language", "ko-KR,ko;q=0.9")
+                .header("Referer", "https://www.google.com/")
+                .get()
             val items = docs.select("li[class^=goodsitem]")
             val productList = parseProductList(items)
 
             println("크롤링 URL: $url, 아이템 개수: ${productList.size}")
             productService.insertProducts(productList)
 
-            Thread.sleep(2000L)
-            if (page > 5) break
+            ThreadUtil.sleepRandomly()
+            if (page > 4) break
         }
     }
 
